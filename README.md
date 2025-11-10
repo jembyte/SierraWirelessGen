@@ -1,5 +1,8 @@
-# Challenge/Response Generator for Sierra Wireless Cards V1.2
+# Challenge/Response Generator for Sierra Wireless Cards V1.3
 (c) B. Kerler 2019-2020
+MIT License
+
+(c) Jembyte 2025
 MIT License
 
 ## Why
@@ -8,31 +11,15 @@ MIT License
 - For setting band options if locked
 
 ## Supported devices
-    "MDM8200": ["M81A", "M81B", "AC880", "AC881", "MC8780", "MC8781", "AC880E", "AC881E", "EM8780", "EM8781",
-                "MC8780V", "MC8781V", "MC8700", "AC308U"],
-    "MDM9200": ["AC710", "MC8775", "MC8775V", "AC875", "MC8700", "AC313U", "MC8801", "MC7700", "MC7750", "MC7710",
-                "EM7700"],
-    "MDM9200_V1": ["AC710", "MC8775", "MC8775V", "AC875", "MC8700", "AC313U", "MC8801", "MC7700", "MC7750",
-                   "MC7710", "EM7700"],
-    "MDM9200_V2": ["AC775", "PC7200"],
-    "MDM9x15": ["SWI9X15C", "AR7550", "AR7552", "AR7554", "EM7355", "EM7655", "MC7354", "WP7100", "WP7102", "WP7104",
-                "MC7305", "EM7305", "MC8805", "EM8805", "MC7350", "MC7350-L", "MC7802", "MC7304", "AR7556", "AR7558",
-                "WP75xx", "WP85xx", "WP8548", "WP8548G", "AC340U"],
-    "MDM9x30": ["EM7455", "MC7455", "EM7430", "MC7430"],
-    "MDM9x30_V1": ["Netgear AC790S/AC791L"],
-    "MDM9x40": ["AC815s", "AC785s","Netgear MR1100"],
-    "MDM9x50": ["EM7565", "EM7565-9", "EM7511"],
-    "MDM9x06": ["WP77xx"],
-    "MDM9x07": ["SWI9X07Y", "WP76xx"]
+    "MDM9x30": ["EM7455", "MC7455", "EM7430", "MC7430"]
     
 ## Installation
 
-- Get python >=3.6 64-Bit
+- Get python >=3.6
 
     ```bash
-    ~> git clone https://github.com/bkerler/SierraWirelessGen
+    ~> git clone https://github.com/jembyte/SierraWirelessGen
     ~> chmod +x SierraWirelessGen/sierrakeygen.py
-    ~> pip3 install -r requirements.txt
     ```
 
 ## Usage
@@ -55,15 +42,11 @@ MIT License
     ```
 
 - Run generator:
-    For automatic unlock, use -u:
-    ```bash
-    ~> ./sierrakeygen.py -u
-    ```
 
     For AT!OPENLOCK use -l, for AT!OPENMEP use -m and for AT!OPENCND use -c accordingly
-    (here challenge is BE96CBBEE0829BCA and device generation is MDM9200)
+    (here challenge is BE96CBBEE0829BCA and device generation is MDM9x30)
     ```bash
-    ~> ./sierrakeygen.py -l BE96CBBEE0829BCA -d MDM9200
+    ~> ./sierrakeygen.py -l BE96CBBEE0829BCA -d MDM9x30
     ```
 
 - Send generated response back to the modem
@@ -116,15 +99,7 @@ MIT License
 
 ## Remarks
 
-- MDM9200/MDM9x15/MDM9x30/MDM9x40/MDM9x50 confirmed to work
-
-- For AC785/AC790/AC810/MR1100, you can access the serial port via tcp:
-
-    ```bash
-    HostName: 192.168.1.1
-    Port: 5510
-    ConnectionType: Telnet
-    ```
+- MDM9x30 confirmed to work
 
 - Get firmware details :
 
@@ -302,34 +277,6 @@ MIT License
     ```
     AT!CUSTOM?
     ```
-
- - Enable telnet (after sending valid openlock request)
-
-    ```
-    at!custom="TELNETENABLE",1
-    ```
-
- - Enable adb (after sending valid openlock request, here: MC7304/AC810)
-
-    ```
-    AT!CUSTOM="ADBENABLE", 1
-    ```
-
-    Regulary, tcp port 5555 is used for adb
-
-    ```
-    adb tcpip 5555
-    adb connect 192.168.1.1
-    ```
-  
- - Enable telnet (after sending valid openlock request, here: MR1100)
-
-    ```
-    AT!TELEN=1
-    AT!CUSTOM="RDENABLE", 1
-    AT!CUSTOM="TELNETENABLE", 1
-    ```
-    then reboot the device. Afterwards, telnet should be available on MR1100 via 192.168.1.1:23
 
  - Flash firmware :
 
